@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uts_2021110077/home_screen.dart';
+import '../screens/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -15,7 +15,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void _navigateToHome() {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => const HomeScreen(),
+        builder: (context) => HomeScreen(),
       ),
     );
   }
@@ -44,7 +44,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       'Welcome to Toko',
                       style: TextStyle(
                         fontSize: 24,
-                        fontWeight: FontWeight.bold
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Poppins'
                         ),
                     ),
                   ),
@@ -95,6 +96,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         'Login',
                         style: TextStyle(
                           color: Colors.white,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 18
                         ),
                       ),
                     ),
