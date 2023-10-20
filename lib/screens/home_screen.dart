@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
 import '../screens/login_screen.dart';
+import '../screens/product_screen.dart';
+import '../screens/cart_screen.dart';
 import '../models/product.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+
+  const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final List<Product> products = Product.getProducts();
 
-  HomeScreen({Key? key}) : super(key: key);
+Product? selectedProduct;
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +23,7 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         leading: Builder(
           builder: (context) => IconButton(
-            icon: Icon(Icons.menu),
+            icon: const Icon(Icons.menu),
             onPressed: () {
               Scaffold.of(context).openDrawer();
             },
@@ -21,7 +31,7 @@ class HomeScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
             onPressed: () {
             },
           ),
@@ -33,7 +43,7 @@ class HomeScreen extends StatelessWidget {
             ListTile(
               title: Row(
                 children: [
-                  Text(
+                  const Text(
                     'Toko',
                     style: TextStyle(
                       fontFamily: 'Poppins',
@@ -41,9 +51,9 @@ class HomeScreen extends StatelessWidget {
                       fontSize: 24,
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   IconButton(
-                    icon: Icon(Icons.close),
+                    icon: const Icon(Icons.close),
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
@@ -51,25 +61,25 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 18),
+            const SizedBox(height: 18),
             ListTile(
-              title: Text('Our Products'),
-              leading: Icon(Icons.store_outlined),
+              title: const Text('Our Products'),
+              leading: const Icon(Icons.store_outlined),
               onTap: () {
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
-                    builder: (context) => HomeScreen(),
+                    builder: (context) => const HomeScreen(),
                   ),
                 );
               },
             ),
             ListTile(
-              title: Text('Logout'),
-              leading: Icon(Icons.logout_outlined),
+              title: const Text('Logout'),
+              leading: const Icon(Icons.logout_outlined),
               onTap: () {
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
-                    builder: (context) => LoginScreen(),
+                    builder: (context) => const LoginScreen(),
                   ),
                 );
               },
@@ -78,11 +88,11 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8.0),
         child: CustomScrollView(
           slivers: <Widget>[
             SliverGrid(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 childAspectRatio: 0.9,
               ),
@@ -90,36 +100,48 @@ class HomeScreen extends StatelessWidget {
                 (BuildContext context, int index) {
                   return Padding(
                     padding: const EdgeInsets.all(2.0),
-                    child: Card(
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 120,
-                            child: Stack(
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
+                    child: InkWell(
+                      onTap: () {
+                        // Navigate
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => ProductScreen(product: products[index]),
+                          ),
+                        );
+                      },
+                      child: Card(
+                        child: Column(
+                          children: [
+                            AspectRatio(
+                              aspectRatio: 1.3,
+                              child: Stack(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                    child: Image.asset(
+                                      products[index].imagePath,
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
-                                  child:
-                                    products[index].image,
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              products[index].nama,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Poppins',
+                            Padding(
+                              padding: const EdgeInsets.all(1.0),
+                              child: Text(
+                                products[index].nama,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Poppins',
+                                ),
                               ),
-                              ),
-                          ),
-                        ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );
@@ -132,7 +154,13 @@ class HomeScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         tooltip: 'My cart',
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => CartScreen(product: selectedProduct),
+            ),
+          );
+        },
         child: const Icon(Icons.shopping_cart_outlined),
       ),
     );
