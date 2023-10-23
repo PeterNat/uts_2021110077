@@ -14,7 +14,7 @@ class Product {
   static List<Product> getProducts() {
     return [
       Product(
-        nama: "Comfort Single Chair",
+        nama: "Single Chair",
         harga: 1300000,
         deskripsi:
             "Our single chair is the embodiment of simplicity and comfort. It's designed with a focus on providing a cozy and stylish seating solution for any room. This chair is a versatile addition to your decor, whether used as an accent piece or a comfortable spot for relaxation.",
@@ -56,7 +56,7 @@ class Product {
         imagePath: "assets/images/products/dining-table.jpg",
       ),
       Product(
-        nama: "Bookshelf",
+        nama: "Book Shelf",
         harga: 1200000,
         deskripsi:
             "The bookshelf is a versatile piece of furniture that adds sophistication to any room. Its spacious shelves provide ample storage space for your favorite books and decorative items, while the elegant design elevates your space. Organize your collection with style.",

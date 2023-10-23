@@ -154,10 +154,10 @@ Product? selectedProduct;
       ),
       floatingActionButton: FloatingActionButton(
         tooltip: 'My cart',
-        onPressed: () {
+         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => CartScreen(product: selectedProduct),
+              builder: (context) => CartScreen(),
             ),
           );
         },
