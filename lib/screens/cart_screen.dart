@@ -3,8 +3,10 @@ import 'package:intl/intl.dart';
 import '../models/product.dart';
 
 class CartScreen extends StatefulWidget {
+  const CartScreen({super.key});
+
   @override
-  _CartScreenState createState() => _CartScreenState();
+  State<CartScreen> createState() => _CartScreenState();
 }
 
 class _CartScreenState extends State<CartScreen> {
@@ -36,7 +38,7 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double totalCart = 0.0; // Tambahkan variabel totalCart
+    double totalCart = 0.0;
 
     // Hitung total harga dari semua produk
     for (int i = 0; i < selectedProducts.length; i++) {
@@ -51,80 +53,101 @@ class _CartScreenState extends State<CartScreen> {
             Navigator.pop(context);
           },
         ),
-        title: const Text('Cart'),
       ),
-      body: ListView.builder(
-        itemCount: selectedProducts.length,
-        itemBuilder: (context, index) {
-          Product product = selectedProducts[index];
-          int quantity = quantities[index];
-          double totalPrice = product.harga.toDouble() * quantity;
-
-          return Card(
-            margin: const EdgeInsets.all(8.0),
+      body: Column(
+        children: [
+              const Align(
+            alignment: Alignment.centerLeft,
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Container(
-                    width: 80, // Lebar gambar
-                    height: 80, // Tinggi gambar
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.0),
-                      image: DecorationImage(
-                        image: AssetImage(product.imagePath),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 16.0), // Jarak antara gambar dan teks
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                'Cart',
+                style: TextStyle(
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: selectedProducts.length,
+              itemBuilder: (context, index) {
+                Product product = selectedProducts[index];
+                int quantity = quantities[index];
+                double totalPrice = product.harga.toDouble() * quantity;
+
+                return Card(
+                  margin: const EdgeInsets.all(8.0),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
                       children: [
-                        Text(
-                          product.nama,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                        Container(
+                          width: 80, // Lebar gambar
+                          height: 80, // Tinggi gambar
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.0),
+                            image: DecorationImage(
+                              image: AssetImage(product.imagePath),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
-                        Row(
-                          children: [
-                            Text(
-                              'Rp. ${NumberFormat.decimalPattern().format(product.harga)}',
-                            ),
-                            Text(
-                              ' x $quantity',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ],
+                        const SizedBox(width: 16.0), // Jarak antara gambar dan teks
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                product.nama,
+                                style: const TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    'Rp. ${NumberFormat.decimalPattern().format(product.harga)}',
+                                  ),
+                                  Text(
+                                    ' x $quantity',
+                                    style: const TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        Text(
+                          'Rp. ${NumberFormat.decimalPattern().format(totalPrice)}',
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
                   ),
-                  Text(
-                    'Rp. ${NumberFormat.decimalPattern().format(totalPrice)}',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
+                );
+              },
             ),
-          );
-        },
-      ),
-      bottomNavigationBar: BottomAppBar(
-        child: Container(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Rp. ${NumberFormat.decimalPattern().format(totalCart)}',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              ElevatedButton(
+          ),
+          // bottom bar
+          Container(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Rp. ${NumberFormat.decimalPattern().format(totalCart)}',
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                ElevatedButton(
                    onPressed: () {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                        content: Text('Product added to cart'),
+                        content: Text('Thank you'),
                         duration: Duration(seconds: 2),
                       ),
                     );
@@ -136,18 +159,18 @@ class _CartScreenState extends State<CartScreen> {
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(const Color.fromARGB(255, 4, 87, 98),),
                     foregroundColor: MaterialStateProperty.all(Colors.white),
-                    minimumSize: MaterialStateProperty.all(const Size(100, 80)),
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(6.0),
-                          ),
-                        ),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6.0),
+                      ),
+                    ),
                   ),
                   child: const Text('Checkout'),
                 ),
-            ],
+              ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:uts_2021110077/screens/cart_screen.dart';
+// import 'package:uts_2021110077/screens/cart_screen.dart';
 import 'package:uts_2021110077/screens/login_screen.dart';
-import 'package:uts_2021110077/screens/home_screen.dart';
+// import 'package:uts_2021110077/screens/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         fontFamily: 'Poppins'
       ),
-      home: CartScreen(),
+      home: const LoginScreen(),
     );
   }
 }

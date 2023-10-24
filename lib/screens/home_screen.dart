@@ -5,7 +5,6 @@ import '../screens/cart_screen.dart';
 import '../models/product.dart';
 
 class HomeScreen extends StatefulWidget {
-
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
@@ -13,9 +12,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final TextEditingController searchController = TextEditingController();
   final List<Product> products = Product.getProducts();
-
-Product? selectedProduct;
+  bool isSearching = false;
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +32,20 @@ Product? selectedProduct;
           IconButton(
             icon: const Icon(Icons.search),
             onPressed: () {
+              setState(() {
+                isSearching = !isSearching;
+              });
             },
           ),
         ],
+        title: isSearching
+            ? TextField(
+                controller: searchController,
+                decoration: const InputDecoration(
+                  hintText: 'Search Products',
+                ),
+              )
+            : const Text(''),
       ),
       drawer: Drawer(
         child: ListView(
@@ -91,6 +101,18 @@ Product? selectedProduct;
         padding: const EdgeInsets.all(8.0),
         child: CustomScrollView(
           slivers: <Widget>[
+            const SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  'Our Products',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
             SliverGrid(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
@@ -109,6 +131,7 @@ Product? selectedProduct;
                           ),
                         );
                       },
+                      
                       child: Card(
                         child: Column(
                           children: [
@@ -154,16 +177,16 @@ Product? selectedProduct;
       ),
       floatingActionButton: FloatingActionButton(
         tooltip: 'My cart',
-         onPressed: () {
+        onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => CartScreen(),
+              builder: (context) => const CartScreen(),
             ),
           );
         },
+        shape: const CircleBorder(),
         child: const Icon(Icons.shopping_cart_outlined),
       ),
     );
   }
 }
-

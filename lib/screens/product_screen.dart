@@ -9,7 +9,7 @@ class ProductScreen extends StatefulWidget {
   const ProductScreen({Key? key, required this.product}) : super(key: key);
 
   @override
-  _ProductScreenState createState() => _ProductScreenState();
+  State<ProductScreen> createState() => _ProductScreenState();
 }
 
 class _ProductScreenState extends State<ProductScreen> {
@@ -23,9 +23,9 @@ class _ProductScreenState extends State<ProductScreen> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
+            // icon back ditambahkan agar jika tidak ingin "add to cart" maka bisa back ke halaman sebelumnya
           },
         ),
-        title: const Text('Product Details'),
       ),
       body: Column(
         children: [
@@ -130,6 +130,11 @@ class _ProductScreenState extends State<ProductScreen> {
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(const Color.fromARGB(255, 4, 87, 98),),
                     foregroundColor: MaterialStateProperty.all(Colors.white),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6.0),
+                      ),
+                    ),
                   ),
                   child: const Text('Add to Cart'),
                 ),
