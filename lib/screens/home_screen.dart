@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
               title: Row(
                 children: [
                   const Text(
-                    'Toko',
+                    'Tokko',
                     style: TextStyle(
                       fontFamily: 'Poppins',
                       fontWeight: FontWeight.bold,
@@ -185,7 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         },
         shape: const CircleBorder(),
-        child: const Icon(Icons.shopping_cart_outlined),
+        child: const Icon(Icons.shopping_cart),
       ),
     );
   }

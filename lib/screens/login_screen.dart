@@ -46,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     const Align(
                       alignment: Alignment.center,
                       child: Text(
-                        'Welcome to Toko',
+                        'Welcome to Tokko',
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
